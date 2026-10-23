@@ -8,5 +8,5 @@ function Info({ name }) {
   )
 }
 
-ad
+
 export default Info
