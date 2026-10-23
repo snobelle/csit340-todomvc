@@ -2,8 +2,15 @@ import { useState } from 'react'
 function Todos() {
     const [todos, setTodos] = useState([])
     const activeCount = todos.filter((todo) => !todo.completed).length
+    const visibleTodos =
+    filter === 'active'
+    ? todos.filter((todo) => !todo.completed)
+    : filter === 'completed'
+      ? todos.filter((todo) => todo.completed)
+      : todos
     const hasCompleted = todos.some((todo) => todo.completed)
     const allCompleted = todos.length > 0 && todos.every((todo) => todo.completed)
+    const [filter, setFilter] = useState('all')
 
     function handleSubmit(e) {
     e.preventDefault()
@@ -31,6 +38,7 @@ function Todos() {
     function handleToggleAll() {
     setTodos(todos.map((todo) => ({ ...todo, completed: !allCompleted })))
   }
+     
 
   return (
     <section className="mx-auto max-w-[550px]">
@@ -63,7 +71,7 @@ function Todos() {
           >
             <span className="rotate-90">❯</span>
           </label>
-           <ul> {todos.map((todo) => (
+           <ul> {visibleTodos.map((todo) => (
             <li
               key={todo.id}
               className="group relative flex items-center border-b border-[#ededed] text-2xl"
@@ -99,25 +107,43 @@ function Todos() {
           </span>
           <ul className="flex justify-center gap-1">
             <li>
-              <button
+              {/* All */}
+               <button
                 type="button"
-                className="cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]"
+                onClick={() => setFilter('all')}
+                className={
+                filter === 'all'
+                ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+            }
               >
-                All
-              </button>
+            All
+                </button>
             </li>
             <li>
+              {/* Active */}
               <button
                 type="button"
-                className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10"
+                onClick={() => setFilter('active')}
+                className={
+                  filter === 'active'
+                    ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                    : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+                }
               >
                 Active
               </button>
             </li>
             <li>
+              {/* Completed */}
               <button
                 type="button"
-                className="cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10"
+                onClick={() => setFilter('completed')}
+                className={
+                  filter === 'completed'
+                    ? 'cursor-pointer rounded-[3px] border border-[#b83f45]/20 px-[7px] py-[3px]'
+                    : 'cursor-pointer rounded-[3px] border border-transparent px-[7px] py-[3px] hover:border-[#b83f45]/10'
+                }   
               >
                 Completed
               </button>
