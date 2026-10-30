@@ -1,6 +1,8 @@
 import { useState } from 'react'
 function Todos() {
+    const [text, setText] = useState('')
     const [todos, setTodos] = useState([])
+    const [filter, setFilter] = useState('all')
     const activeCount = todos.filter((todo) => !todo.completed).length
     const visibleTodos =
     filter === 'active'
@@ -10,7 +12,6 @@ function Todos() {
       : todos
     const hasCompleted = todos.some((todo) => todo.completed)
     const allCompleted = todos.length > 0 && todos.every((todo) => todo.completed)
-    const [filter, setFilter] = useState('all')
 
     function handleSubmit(e) {
     e.preventDefault()
@@ -95,7 +96,7 @@ function Todos() {
                 type="button"
                 onClick={() => handleDelete(todo.id)}
                 className="absolute right-[10px] hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]">
-              x
+              ×
               </button>
             </li>
             ))}
